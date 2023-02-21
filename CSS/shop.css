@@ -1,0 +1,31 @@
+#shop-page-banner {
+    background-image: url(../Images/banner/b3.jpg);
+    width: 100%;
+    height: 70vh;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    padding: 14px;
+}
+#shop-page-banner h2,
+#shop-page-banner p {
+    color: orangered;
+}
+
+#pagination {
+    text-align: center;
+}
+#pagination a {
+    text-decoration: none;
+    background-color: orangered;
+    padding: 15px 20px;
+    border-radius: 5px;
+    color: white;
+}
+
+#pagination a i {
+    font-size: 16px;
+    font-weight: 700;
+}

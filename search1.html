@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Responsive Pet Food Website Design Tutorial</title>
+    <link rel="stylesheet" href="./CSS/search.css">
+
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <script src="https://kit.fontawesome.com/500ed785c2.js" crossorigin="anonymous"></script>
+
+
+    <style>
+        #products {
+            width: 100%;
+            background-color: white;
+        }
+
+        .item {
+            width: 200px;
+            height: 300px;
+            background-color: #fbcd91;
+            box-shadow: initial;
+            margin: 10px;
+            float: left;
+            text-align: center;
+            text-transform: capitalize;
+        }
+
+            .item img {
+                width: 150px;
+                height: 130px;
+            }
+
+    </style>
+</head>
+<body>
+    <div class="search-form">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="search" id="search-box" placeholder="search here..."
+               onkeyup="search()">
+    </div>
+
+    <div id="products">
+
+        <div class="item">
+            <h3>M&M</h3>
+            <img src="./Images/products/child/ch1.png" />
+            <p>Price:450tk</p>
+            <button type="button">ADD TO CART</button>
+        </div>
+
+        <div class="item">
+            <h3>Easy</h3>
+            <img src="./Images/products/men/men5.jpg" />
+            <p>Price:350tk</p>
+            <button type="button">ADD TO CART</button>
+        </div>
+        <div class="item">
+            <h3>S&sons</h3>
+            <img src="./Images/products/women/w1.jpg" />
+            <p>Price:1000tk</p>
+            <button type="button">ADD TO CART</button>
+        </div>
+        <div class="item">
+            <h3>M&M</h3>
+            <img src="./Images/products/women/w1.jpg" />
+            <p>Price:500tk</p>
+            <button type="button"><a>ADD TO CART</a> </button>
+        </div>
+    </div>
+
+    <script>
+        const search = () => {
+            const searchbox = document.getElementById("search-box").value.toUpperCase();
+            const storeItems = document.getElementById("products")
+            const product = document.querySelectorAll(".item")
+            const pname = storeItems.getElementsByTagName("h3")
+
+            for (var i = 0; i < pname.length; i++) {
+                let match = product[i].getElementsByTagName("h3")[0];
+
+                if (match) {
+                    let textvalue = match.textContent || match.innerHTML
+                    if (textvalue.toUpperCase().indexOf(searchbox) > -1) {
+                        product[i].style.display = "";
+                    }
+                    else {
+                        product[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+
+
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

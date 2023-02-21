@@ -1,0 +1,20 @@
+#products {
+    width: 100%;
+    background-color: white;
+}
+
+.item {
+    width: 200px;
+    height: 300px;
+    background-color: #fbcd91;
+    box-shadow: initial;
+    margin: 10px;
+    float: left;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+    .item img {
+        width: 150px;
+        height: 130px;
+    }

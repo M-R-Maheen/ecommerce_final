@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>First Ecommerce Site</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+    <!-----CSS File Links-->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./CSS/about.css">
+    <link rel="stylesheet" href="./CSS/add_product.css">
+    <!----JQuery File Links-->
+    <script src="Scripts/jquery-3.5.1.js"></script>
+
+    <!-- Style css ------>
+    <style type="text/css">
+
+    </style>
+</head>
+<body>
+    <section id="header">
+        <div id="fashion">FashionBD.com</div>
+        <div></div>
+        <div>
+            <ul id="navbar">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="category.html">Category</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="company.html">Company</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a class="active" href="add_product.html">Add Product</a></li>
+                <li><a href="cart.html"><i class="fa-sharp fa-solid fa-cart-shopping"></i></a></li>
+            </ul>
+        </div>
+    </section>
+
+    <!----------------Add New Product START-------------------------->
+    <section id="add-product">
+        <div id="container">
+            <div id="left">
+                <h2>Products List</h2>
+                <table id="tbl" cellpadding="3" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Prpduct Name</th>
+                            <th>Category</th>
+                            <th>Brand</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Image</th>
+                            <th>----</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div id="right">
+                <h2>Add New</h2>
+                <div>
+                    <label class="label">Product Name</label>
+                    <input type="text" id="pname" />
+                </div>
+                <div>
+                    <label class="label">Category</label>
+                    <input type="text" id="category" />
+                </div>
+                <div>
+                    <label class="label">Brand</label>
+                    <input type="text" id="brand" />
+                </div>
+                <div>
+                    <label class="label">Quantity</label>
+                    <input type="text" id="quantity" />
+                </div>
+                <div>
+                    <label class="label">Price</label>
+                    <input type="text" id="price" />
+                </div>
+                <div>
+                    <label class="label">Image</label>
+                    <input type="text" id="image" />
+                </div>
+                <div>
+                    <input type="button" id="add" value="Add New" />
+                </div>
+            </div>
+        </div>
+        <br><hr>
+        <script type="text/javascript">
+            var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+
+            window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction;
+            window.IDBCursor = window.IDBCursor || window.webkitIDBCursor;
+            window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange;
+
+            var db;
+            var currentEdit = null;
+
+            $(document).ready(function () {
+                var openReq = indexedDB.open("DetailsDB", 1);
+                openReq.onupgradeneeded = function (e) {
+                    db = e.target.result;
+
+                    var store = db.createObjectStore("Details", { keyPath: "id", autoIncrement: true });
+                    console.log(store);
+                }
+
+                openReq.onsuccess = function (e) {
+                    db = e.target.result;
+                    console.log(db);
+                    readAll();
+
+                    //Add Data
+                    $("#add").click(function () {
+                        if ($("#pname").val() != "" && $("#category").val() != "" && $("#brand").val() != "" && $("#quantity").val() != "" && $("#price").val() != "" && $("#image").val() != "") {
+                            var tx = db.transaction(["Details"], "readwrite");
+                            if (currentEdit == null) {
+                                var store = tx.objectStore("Details");
+                                var req = store.add({
+                                    ProductName: $("#pname").val(),
+                                    Category: $("#category").val(),
+                                    Brand: $("#brand").val(),
+                                    Quantity: $("#quantity").val(),
+                                    Price: $("#price").val(),
+                                    Image: $("#image").val(),
+
+                                });
+                                req.onsuccess = function (e) {
+                                    console.log("Added data...");
+                                    readAll();
+                                }
+                            }
+                            else {
+                                var store = tx.objectStore("Details");
+                                var req = store.put({
+                                    ProductName: $("#pname").val(),
+                                    Category: $("#category").val(),
+                                    Brand: $("#brand").val(),
+                                    Quantity: $("#quantity").val(),
+                                    Price: $("#price").val(),
+                                    Image: $("#image").val(),
+
+                                    id: currentEdit.id
+                                });
+                                req.onsuccess = function (e) {
+                                    console.log("Updated data...");
+                                    readAll();
+                                    alert("Updated data Successfully ...!!")
+                                }
+                            }
+                            $("#add").val("Add New");
+                            currentEdit = null;
+                        }
+                        else {
+                            alert("Please fill up the all fields!!!");
+                        }
+                    });
+                }
+            });
+
+            function readAll() {
+                $("#tbl tbody").empty();
+                var tx = db.transaction(["Details"], "readonly");
+                var req = tx.objectStore("Details").openCursor();
+                req.onsuccess = function (e) {
+                    var cursor = e.target.result;
+                    if (!cursor) return;
+                    $("#tbl tbody").append(
+                        "<tr>" +
+                        "<td>" + cursor.value.ProductName + "</td>" +
+                        "<td>" + cursor.value.Category + "</td>" +
+                        "<td>" + cursor.value.Brand + "</td>" +
+                        "<td>" + cursor.value.Quantity + "</td>" +
+                        "<td>" + cursor.value.Price + "</td>" +
+                        "<td>" + cursor.value.Image + "</td>" +
+                        "<td>" + "<button type='button' class='edit' data-key='" + cursor.key + "'>Edit</button>|<button type = 'button' class='delete' data-key='" + cursor.key + "'>Delete</button>" + "</td>" +
+                        "</tr>"
+                    )
+                    cursor.continue();
+                }
+                req.onerror = function (err) {
+                    console.log(err);
+                }
+                //for delete
+                tx.oncomplete = function () {
+                    $(".delete").click(function () {
+                        var id = $(this).attr('data-key');
+                        var row = $(this).parent().parent();
+                        var tx = db.transaction(["Details"], "readwrite");
+                        var store = tx.objectStore("Details");
+                        var req = store.delete(parseInt(id));
+                        req.onsuccess = function (e) {
+                            console.log("Data deleted successfullly!!!!");
+                            row.remove();
+                        }
+                    })
+
+                    //For edit
+                    $(".edit").click(function (evt) {
+                        evt.preventDefault();
+                        fillForm($(this).attr('data-key'));
+                    })
+                }
+            }
+
+            function fillForm(id) {
+                var t = db.transaction(["Details"], "readwrite");
+                var objStore = t.objectStore("Details");
+                var request = objStore.get(parseInt(id));
+                request.onsuccess = function (evt) {
+                    currentEdit = request.result;
+                    console.log(currentEdit);
+                    $("#pname").val(currentEdit.ProductName);
+                    $("#category").val(currentEdit.Category);
+                    $("#brand").val(currentEdit.Brand);
+                    $("#quantity").val(currentEdit.Quantity);
+                    $("#price").val(currentEdit.Price);
+                    $("#image").val(currentEdit.Image);
+                    $("#add").val("Update");
+                }
+            }
+        </script>
+    </section>
+    <br><hr>
+    <!-----------------------------------------------------------
+        <br /><br /><br /><hr />
+        <footer class="section-p1">
+            <div class="col">
+                <div id="fashion">FashionBD.com</div>
+                <h4>Contact</h4>
+                <p><strong>Address: </strong> 54 Mirpur Road, street 32, Dhaka-1216.</p>
+                <p><strong>Phone: </strong> 01700-00 00 00</Address></p>
+                <p><strong>Hours: </strong> 08:00 am - 03:00 pm Sun - Thu </Address></p>
+                <div class="follow">
+                    <h4>Follow Us</h4>
+                    <div class="icon">
+                        <i class="fab fa-facebook"></i>
+                        <i class="fab fa-twitter"></i>
+                        <i class="fab fa-instagram"></i>
+                        <i class="fab fa-pinterest-p"></i>
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <h4>About</h4>
+                <a href="#"> About Us</a>
+                <a href="#">Delivery Informations</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Contact Us</a>
+            </div>
+            <div class="col">
+                <h4>My Account</h4>
+                <a href="#">Sign In</a>
+                <a href="#">View Cart</a>
+                <a href="#">My Wishlist</a>
+                <a href="#">Track My Order</a>
+                <a href="#">Help</a>
+            </div>
+            <div class="col install">
+                <h4>Install App</h4>
+                <p>Form App Store Or Google Play</p>
+                <div class="row">
+                    <img src="Images/footer/App_Store_Badge.svg.png" alt="pay" width="100" height="58">
+                    <img src="Images/footer/google_pay.png" alt="pay" width="100">
+                </div>
+                <p>Secured Payment Gateways</p>
+                <img src="Images/footer/visa.jfif" alt="Pay" width="200">
+            </div>
+            <br>
+            <div class="copyright">
+                <p>&#169; 2022, Self-Development - HTML CSS & JavaScript Ecommerce Site</p>
+            </div>
+        </footer>
+            -------------------------------------------------->
+    <script src="script.js"></script>
+</body>
+</html>

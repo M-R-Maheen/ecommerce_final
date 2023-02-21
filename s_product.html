@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>First Ecommerce Site</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./CSS/shop.css">
+    <link rel="stylesheet" href="./CSS/s_product.css">
+</head>
+<body>
+    
+    <section id="header">
+        <div id="fashion">FashionBD.com</div>
+        <div>
+            <ul id="navbar">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="category.html">Category</a></li>
+                <li><a class="active" href="shop.html">Shop</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="company.html">Company</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="add_product.html">Add Product</a></li>
+                <li><a href="cart.html"><i class="fa-sharp fa-solid fa-cart-shopping"></i></a></li>
+            </ul>
+        </div>
+    </section>
+
+    <h1>Product Details</h1>
+
+<section id="product-details" class="section-p1">
+    <div class="single-pro-image">
+        <img src="./Images/products/men/men5.jpg" alt="Product-Images" width="100%" id="MainImg">
+   
+        <div class="small-img-group">
+            <div class="small-img-col">
+                <img src="./Images/products/men/men8.jpg"  width="100%" alt="SmallImage" class="SmallImg">
+            </div>
+            <div class="small-img-col">
+                <img src="./Images/products/men/men6.jpg"  width="100%" alt="SmallImage" class="SmallImg">
+            </div>
+            <div class="small-img-col">
+                <img src="./Images/products/men/men7.jpg"  width="100%" alt="SmallImage" class="SmallImg">
+            </div>
+            <div class="small-img-col">
+                <img src="./Images/products/men/men9.jpg"  width="100%" alt="SmallImage" class="SmallImg">
+            </div>
+        </div>
+    </div>
+
+    <div class="single-pro-details">
+        <h5>Home / T-Shirt</h5> 
+        <h4>Men's Fashion T Shirt</h4>
+        <h2>$15.00</h2>
+
+        <label>Select Size:</label>
+        <select>
+            <option>XL</option>
+            <option>XXL</option>
+            <option>L</option>
+            <option>M</option>
+            <option>Small</option>
+            <option>Large</option>
+        </select>
+        <input type="number" value="1" min="1">
+        <button class="cart-button"><a href="cart.html">Add To Cart</a></button>
+        <h4>Product Details</h4>
+        <span>About Clothing. Smart Results Today! Find Description About Clothing. Search Here! Visit us Now. Discover More Results. More Info Here. Information 24/7. Find Quick Results. Easy to Use. Search for Info. Get More Related Info.</span>
+    </div>
+</section>
+    
+    <br>
+    <br>
+    <br>
+    <hr>
+    <footer class="section-p1">
+        <div class="col">
+            <img class="logo" src="Images/logo2.png" alt="logo" width="80" height="80" >
+            <h4>Contact</h4>
+            <p><strong>Address: </strong> 54 Mirpur Road, street 32, Dhaka-1216.</p>
+            <p><strong>Phone: </strong> 01700-00 00 00</p>
+            <p><strong>Hours: </strong> 08:00 am - 03:00 pm Sun - Thu </p>
+            <div class="follow">
+                <h4>Follow Us</h4>
+                <div class="icon">
+                    <i class="fab fa-facebook"></i>
+                    <i class="fab fa-twitter"></i>
+                    <i class="fab fa-instagram"></i>
+                    <i class="fab fa-pinterest-p"></i>
+                    <i class="fab fa-youtube"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <h4>About</h4>
+            <a href="#"> About Us</a>
+            <a href="#">Delivery Informations</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms & Conditions</a>
+            <a href="#">Contact Us</a>
+        </div>
+        <div class="col">
+            <h4>My Account</h4>
+            <a href="#">Sign In</a>
+            <a href="#">View Cart</a>
+            <a href="#">My Wishlist</a>
+            <a href="#">Track My Order</a>
+            <a href="#">Help</a>
+        </div>
+        <div class="col install">
+            <h4>Install App</h4>
+            <p>Form App Store Or Google Play</p>
+            <div class="row">
+                <img src="Images/footer/App_Store_Badge.svg.png" alt="pay" width="100" height="58">
+                <img src="Images/footer/google_pay.png" alt="pay" width="100" >
+            </div>
+            <p>Secured Payment Gateways</p>
+            <img src="Images/footer/visa.jfif" alt="Pay" width="200">
+        </div>
+            <br>
+        <div class="copyright">
+            <p>&#169; 2022, Self-Development - HTML CSS & JavaScript Ecommerce Site</p>
+        </div>
+    </footer>
+
+    <script type="text/javascript">
+        var MainImg = document.getElementById("MainImg");
+        var SmallImg = document.getElementsByClassName("SmallImg");
+
+
+        SmallImg[0].onclick =  function(){
+            MainImg.src = SmallImg[0].src;
+        }
+        SmallImg[1].onclick =function(){
+            MainImg.src = SmallImg[1].src;
+        }
+        SmallImg[2].onclick =function(){
+            MainImg.src =SmallImg[2].src;
+        }
+        SmallImg[3].onclick =function(){
+            MainImg.src =SmallImg[3].src;
+        }
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html>
